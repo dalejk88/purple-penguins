@@ -1,7 +1,31 @@
+<?php
+session_start();
+if ($_SESSION['progress'] != 'two') {
+    header("Location: https://purple.greenriverdev.com/walnutridgewedding/Sprint5/form.php");
+    exit();
+} else if (!strstr($_SERVER['HTTP_REFERER'],"https://purple.greenriverdev.com/walnutridgewedding/Sprint5/packages.php") &&
+            !strstr($_SERVER['HTTP_REFERER'], "https://purple.greenriverdev.com/walnutridgewedding/Sprint5/confirm.php")) {
+    header("Location: https://purple.greenriverdev.com/walnutridgewedding/Sprint5/form.php");
+    exit();
+}
+
+$_SESSION['set']= $_GET['set'];
+
+if ($_SESSION['set'] == 'Layered Arch Wedding Set' || $_SESSION['set'] == 'Modern Round Wedding Set') {
+    $_SESSION['dsbook'] = 0;
+} else {
+    $_SESSION['dsbook'] = 1;
+}
+$_SESSION['progress'] = 'three';
+
+?>
+
 <html>
 <head>
     <title>Extras</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+    
     <link href="formstyles.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Passions+Conflict&display=swap" rel="stylesheet">
@@ -176,7 +200,28 @@ echo '</div>
     </div>';
 
 echo '                
-    </form>
+    </form>';
+
+
+    echo '
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Preview order</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <ul><b>Order Summary:</b>
+                <li>Date: '.$date.'</li>
+                <li>Set: '.$set.'</li>
+                <li>Package: '.$package.'</li>
+                <li>Price: $'.$price.'</li>
+            </ul>
+        </div>
+      </div>
+    </div>
+</div>
 </div>';
 
 function checkExtraAvailability($result, $extras) {
@@ -193,32 +238,6 @@ function checkExtraAvailability($result, $extras) {
     return $reserved;
 }
 
-/*function checkExtraAvailability ($result, $extras){
-    $i = 0;
-    foreach ($extras as $value) {
-        //$j = 0;
-        while ($row = mysqli_fetch_assoc($result)) {
-            //echo implode(",", $row);
-            foreach ($row as $column) {
-                if ($column == 1) {
-                    $extras[$i] = 1;
-                } else {
-                    $extras[$i] = 0;
-                }
-            }
-//            echo $row[$value];
-//            if ($row['$value'] == '1'){
-//                $j = 1;
-//            }
-//        }
-//        $extras[$i] = $j;
-            $i++;
-        }
-        return $extras;
-    }
-}*/
-
-//$extras = checkExtraAvailability();
 
 
 function checkIfSet($box) {
@@ -244,6 +263,11 @@ function headerImage($imagepath, $set) {
 }
 
 #links1 {
+    overflow: hidden;
+    background-color: #333;
+}
+
+#links2 {
     overflow: hidden;
     background-color: #333;
 }
@@ -300,7 +324,10 @@ h1 {
             <div class="col-12" id="navBar1">
                 <div id="navContainer1">
                     <div id="links1">
-                        <a href="https://www.walnutridgeweddingrentals.com/" target="_blank" class="navigation">Home</a>
+                        <a href="https://purple.greenriverdev.com/walnutridgewedding/Sprint5/walnutridge.html"  target="_blank" class="navigation">Home</a>
+                    </div>      
+                    <div id="links2">
+                        <a class="navigation" data-bs-toggle="modal" href="#exampleModal" role="button" target="_blank">Check preview order</a>
                     </div>
                 </div>
             <div class="title">

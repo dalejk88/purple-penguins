@@ -1,3 +1,17 @@
+<?php
+session_start();
+if ($_SESSION['progress'] != 'one') {
+    header("Location: https://purple.greenriverdev.com/walnutridgewedding/Sprint5/form.php");
+    exit();
+} else if (!strstr($_SERVER['HTTP_REFERER'],"https://purple.greenriverdev.com/walnutridgewedding/Sprint5/form.php")) {
+    header("Location: https://purple.greenriverdev.com/walnutridgewedding/Sprint5/form.php");
+    exit();
+}
+
+$_SESSION['progress'] = 'two';
+
+?>
+
 <html>
 <head>
     <title>packages</title>
@@ -23,6 +37,8 @@ $month=$splitdate[1];
 $price = 0;
 
 $setSelected = $_GET['setSelected'];
+
+$result = 0;
 
 if($setSelected == "Layered Arch Wedding Set") {
 
@@ -624,16 +640,14 @@ elseif($setSelected == "Dark Walnut Wedding Set")
     }
 }
 
-/**
- * @throws Exception
- */
+
 function checkAvailability ($set, $reservationDate){
     require '/home/purplegr/wrwreservationdb.php';
     $startDate = new DateTime($reservationDate);
     $endDate = new DateTime($reservationDate);
     date_modify($startDate, '-2 days');
     date_modify($endDate, '+2 days');
-    $sql = "SELECT * FROM order_info WHERE `set` = '".$set."' and wed_date BETWEEN '".$startDate->format('Y-m-d')."' AND '".$endDate->format('Y-m-d')."'";
+    $sql = "SELECT * FROM res_info WHERE `sign_set` = '".$set."' and wed_date BETWEEN '".$startDate->format('Y-m-d')."' AND '".$endDate->format('Y-m-d')."'";
 
     $result = @mysqli_query($cnxn, $sql);
     $num_rows = mysqli_num_rows($result);
@@ -685,8 +699,33 @@ function endForm($options) {
                 <div class="col-3"></div>
             </div>
         </form>';
+        
+    modal($options);
 }
 
+
+function modal($options) {
+    $setSelected = $_GET['setSelected'];
+    $weddingDate = $_GET['weddingDate'];
+    $optionsString = serialize($options);
+    echo '
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Preview order</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <ul><b>Order Summary:</b>
+                <li>Date: '. $weddingDate.'</li>
+            </ul>
+        </div>
+      </div>
+    </div>
+</div>';
+
+}
 
 function headerImage($imagepath, $setSelected) {
     echo'<style>
@@ -706,6 +745,11 @@ function headerImage($imagepath, $setSelected) {
 }
 
 #links1 {
+    overflow: hidden;
+    background-color: #333;
+}
+
+#links2 {
     overflow: hidden;
     background-color: #333;
 }
@@ -762,7 +806,10 @@ h1 {
             <div class="col-12" id="navBar1">
                 <div id="navContainer1">
                     <div id="links1">
-                        <a href="https://www.walnutridgeweddingrentals.com/" target="_blank" class="navigation">Home</a>
+                        <a href="https://purple.greenriverdev.com/walnutridgewedding/Sprint5/walnutridge.html" target="_blank" class="navigation">Home</a>
+                    </div>
+                    <div id="links2">
+                        <a class="navigation" data-bs-toggle="modal" href="#exampleModal" role="button" target="_blank">Check preview order</a>
                     </div>
                 </div>
             <div class="title">

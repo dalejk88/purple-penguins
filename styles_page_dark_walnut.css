@@ -1,11 +1,19 @@
+/*
+    Individual styles for the Dark Walnut Package page of the Walnut Ridge Wedding Rentals web page.
+
+    Author: Elise Appelhans Visser
+    Date: 10/10/22
+    File: styles_page_dark_walnut.css
+*/
+
 .title h1{
     margin-top: 115px;
     font-size: 130px;
-    font-family: 'Passions Conflict', cursive;;
+    font-family: 'Passions Conflict', cursive;
 }
 
 #navBar1 {
-    background-image: url("images/rustic_wood_background.jpg");
+    background-image: url("images/Donnie+Rosie+Photo-1086.jpg");
     min-height: 545px;
     background-position: center;
     background-size: cover;
@@ -29,6 +37,12 @@
     padding: 10px 20px;
     text-decoration: none;
     font-size: 17px;
+}
+
+
+.navigation:hover {
+    background-color: white;
+    color: black;
 }
 
 
@@ -60,6 +74,14 @@ a:hover {
 #wrbg {
     width: 15%;
 }
+.spacertop {
+    padding-top: 30px;
+}
+
+.chair_photo {
+    margin-top: 20px;
+    border-radius: 30px;
+}
 
 h1 {
     margin-top: 30px;
@@ -68,6 +90,24 @@ h1 {
 
 .img-fluid {
     border-radius: 25px;
+}
+
+.goToOption1 {
+    margin-top: 30px;
+    background-color: #dabeb8;
+    color: white;
+    padding: 15px 36px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    transition-duration: 0.5s;
+    border: 2px solid #dabdb8;
+}
+
+.goToOption1:hover {
+    background-color: white;
+    color: #dabdb8;
 }
 
 .text-center h1 {
@@ -80,10 +120,15 @@ h1 {
 
 .text-center p {
     font-family: "Times New Roman", serif;
+    font-size: 20px;
     margin-top: -10px;
     margin-bottom: 10px;
 }
 
+.text-center h2, h3 {
+    font-family: "Times New Roman", serif;
+    font-size: 20px;
+}
 
 
 

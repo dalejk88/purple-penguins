@@ -1,4 +1,8 @@
 <?php
+session_start();
+$_SESSION['progress'] = 'one';
+
+$currentDate = date("Y-m-d");
 
 echo '
 <head>
@@ -25,7 +29,7 @@ echo '
             <div class="col-6">
                 <div class="form-group">
                     <label for="date">Wedding Date</label>
-                    <input type="date" class="form-control" id="date" name="weddingDate" required>
+                    <input type="date" class="form-control" id="date" name="weddingDate" required min="'.$currentDate.'">
                 </div>
                 <div class="form-group mx-auto">
                     <label for="select">Which Rental option are you most interested in?</label>
